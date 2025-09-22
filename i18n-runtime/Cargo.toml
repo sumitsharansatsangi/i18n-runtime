@@ -2,6 +2,13 @@
 name = "i18n-runtime"
 version = "0.1.0"
 edition = "2024"
+authors = ["Sumit Kumar <sharansumitkumar@gmail.com>"]
+license = "MIT"
+description = "Fast i18n runtime for Rust (phf-backed generated support)"
+readme = "README.md"
+repository = "https://github.com/sumitsharansatsangi/i18n-runtime"
+keywords = ["i18n", "localization", "phf"]
+categories = ["internationalization", "development-tools"]
 
 [dependencies]
 phf = { version = "0.13", features = ["macros"] }
