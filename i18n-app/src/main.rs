@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // MessageKey is in the top-level include
     let l = Locale::new("en-IN");
     let v = ig.get_by_str_key(&l, MessageKey::LoginSuccess.as_str()).unwrap_or("<missing>");
-    println!("en-IN EnumCreated => {}", v);
+    println!("en-IN LoginSuccess => {}", v);
 
     Ok(())
 }

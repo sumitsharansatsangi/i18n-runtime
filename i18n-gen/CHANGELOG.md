@@ -1,4 +1,4 @@
-# Changelog — i18n-codegen
+# Changelog — i18n-gen
 All notable changes to this crate will be documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),  
@@ -15,7 +15,7 @@ and this crate adheres to [Semantic Versioning](https://semver.org/).
 
 ## [0.1.0] - 2025-09-22
 ### Added
-- CLI tool `i18n-codegen` (`cargo install i18n-codegen`).
+- CLI tool `i18n-gen` (`cargo install i18n-gen`).
 - Generates:
   - `generated_keys.rs` — defines `MessageKey` enum from `messages.schema.json`.
   - One `*.rs` file per locale (`locales/en.json → EN.rs`, `locales/hi-IN.json → HI_IN.rs`, etc.).

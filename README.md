@@ -1,4 +1,4 @@
-# 🌍 i18n-runtime & i18n-codegen
+# 🌍 i18n-runtime & i18n-gen
 
 **Effortless, fast, and type-safe internationalization (i18n) for Rust apps.**
 Powered by `phf` for zero-cost lookups.
@@ -8,7 +8,7 @@ Powered by `phf` for zero-cost lookups.
 ## ✨ Features
 
 * **Runtime JSON mode** → Load translations from `locales/*.json` at runtime.
-* **Compile-time PHF mode** → Generate Rust code with `i18n-codegen` for maximum speed and safety.
+* **Compile-time PHF mode** → Generate Rust code with `i18n-gen` for maximum speed and safety.
 * **Fallback logic** → Handles tags like `en-IN-BR` → `en-IN` → `en`.
 * **Type-safe keys** → Auto-generated `MessageKey` enum from `messages.schema.json`.
 * **Blazing fast** → Lookup uses `phf::Map` → O(1), no allocations.
@@ -30,7 +30,7 @@ phf = "0.11"
 To install the generator tool:
 
 ```bash
-cargo install i18n-codegen
+cargo install i18n-gen
 ```
 
 ---
@@ -116,7 +116,7 @@ Pre-generate Rust code for **fast, type-safe, allocation-free lookups**.
 ### 1. Run the generator
 
 ```bash
-i18n-codegen ./ ./src/generated_i18n
+i18n-gen ./ ./src/generated_i18n
 ```
 
 This creates:
@@ -169,11 +169,11 @@ If no translation found, falls back to your configured default.
 
 ## 🤔 FAQ
 
-**Q: Do I need `i18n-codegen`?**
+**Q: Do I need `i18n-gen`?**
 A: Only if you want compile-time PHF mode. Runtime mode works without it.
 
 **Q: Should I check generated files into git?**
-A: Yes, recommended. Then you don’t need `i18n-codegen` on every machine.
+A: Yes, recommended. Then you don’t need `i18n-gen` on every machine.
 
 **Q: Why `phf`?**
 A: It gives constant-time lookups and stores translations in a perfect hash table with zero runtime overhead.
@@ -183,7 +183,7 @@ A: It gives constant-time lookups and stores translations in a perfect hash tabl
 ## 🧩 Ecosystem
 
 * **[`i18n-runtime`](https://crates.io/crates/i18n-runtime)** — the library (this crate)
-* **[`i18n-codegen`](https://crates.io/crates/i18n-codegen)** — the generator CLI
+* **[`i18n-gen`](https://crates.io/crates/i18n-gen)** — the generator CLI
 
 ---
 

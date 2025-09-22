@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "i18n-codegen"
+name = "i18n-gen"
 version = "0.1.0"
 dependencies = [
  "anyhow",

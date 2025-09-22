@@ -6,7 +6,7 @@
 # 🌍 i18n-runtime
 
 Effortless, fast, and type-safe **internationalization (i18n)** for Rust apps.  
-Supports both **runtime JSON loading** and **compile-time PHF maps** (when used with [i18n-codegen](https://crates.io/crates/i18n-codegen)).
+Supports both **runtime JSON loading** and **compile-time PHF maps** (when used with [i18n-gen](https://crates.io/crates/i18n-gen)).
 
 ---
 
@@ -86,16 +86,16 @@ fr     => Welcome!
 
 ### Generated PHF mode
 
-1. Install [i18n-codegen](https://crates.io/crates/i18n-codegen):
+1. Install [i18n-gen](https://crates.io/crates/i18n-gen):
 
 ```bash
-cargo install i18n-codegen
+cargo install i18n-gen
 ```
 
 2. Run the generator:
 
 ```bash
-i18n-codegen ./ ./src/generated_i18n
+i18n-gen ./ ./src/generated_i18n
 ```
 
 This creates:
@@ -138,7 +138,7 @@ fn main() {
 ## 🧩 Ecosystem
 
 * [**i18n-runtime**](https://crates.io/crates/i18n-runtime) — runtime API (this crate)
-* [**i18n-codegen**](https://crates.io/crates/i18n-codegen) — generator CLI for compile-time PHF maps
+* [**i18n-gen**](https://crates.io/crates/i18n-gen) — generator CLI for compile-time PHF maps
 
 ---
 

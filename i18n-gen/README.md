@@ -1,4 +1,4 @@
-# ⚡ i18n-codegen
+# ⚡ i18n-gen
 
 A CLI tool that generates **fast, type-safe Rust code** for translations.  
 Designed to work seamlessly with [i18n-runtime](https://crates.io/crates/i18n-runtime).
@@ -17,7 +17,7 @@ Designed to work seamlessly with [i18n-runtime](https://crates.io/crates/i18n-ru
 ## 📦 Installation
 
 ```bash
-cargo install i18n-codegen
+cargo install i18n-gen
 ````
 
 ---
@@ -45,7 +45,7 @@ cargo install i18n-codegen
 3. Run the generator:
 
 ```bash
-i18n-codegen ./ ./src/generated_i18n
+i18n-gen ./ ./src/generated_i18n
 ```
 
 4. Generated files:
@@ -86,7 +86,7 @@ fn main() {
 ## 🔄 Workflow
 
 1. Edit your JSON files in `locales/`
-2. Re-run `i18n-codegen` to regenerate Rust code
+2. Re-run `i18n-gen` to regenerate Rust code
 3. Rebuild your app → translations are now compiled in and lightning-fast ⚡
 
 ---
@@ -101,14 +101,14 @@ For dynamic translation loading, use `i18n-runtime` alone.
 ➡️ Yes, recommended. Makes builds reproducible and avoids requiring the generator on every machine.
 
 **Q: Can I run it automatically in `build.rs`?**
-➡️ Yes! Just call `i18n-codegen` from your build script. Or run it manually in CI.
+➡️ Yes! Just call `i18n-gen` from your build script. Or run it manually in CI.
 
 ---
 
 ## 🧩 Ecosystem
 
 * [**i18n-runtime**](https://crates.io/crates/i18n-runtime) — runtime API
-* [**i18n-codegen**](https://crates.io/crates/i18n-codegen) — generator CLI (this crate)
+* [**i18n-gen**](https://crates.io/crates/i18n-gen) — generator CLI (this crate)
 
 ---
 

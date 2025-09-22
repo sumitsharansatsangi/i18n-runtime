@@ -1,5 +1,5 @@
 [package]
-name = "i18n-codegen"
+name = "i18n-gen"
 version = "0.1.0"
 edition = "2024"
 authors = ["Sumit Kumar <sharansumitkumar@gmail.com>"]
@@ -18,5 +18,5 @@ walkdir = "2.3"
 anyhow = "1.0"
 
 [[bin]]
-name = "i18n-codegen"
+name = "i18n-gen"
 path = "src/main.rs"

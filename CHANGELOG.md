@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Improved error messages in codegen
-- Add support for auto-running `i18n-codegen` from a build script
+- Add support for auto-running `i18n-gen` from a build script
 - Add CI workflow for publishing crates
 
 ---
@@ -21,8 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Locale fallback logic (`en-IN-BR → en-IN → en`)
   - `Locale` type with tag normalization
   - Basic translation lookup (`.get_owned`, `.get_by_str_key`)
-- **i18n-codegen**
-  - CLI tool `i18n-codegen` (`cargo install i18n-codegen`)
+- **i18n-gen**
+  - CLI tool `i18n-gen` (`cargo install i18n-gen`)
   - Generates:
     - `MessageKey` enum from `messages.schema.json`
     - One `*.rs` file per locale JSON (`locales/en.json → EN.rs`, etc.)
@@ -36,5 +36,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2025-09-20 (internal only)
 - Initial experiments with PHF maps and locale fallback
-- Basic build.rs generator (superseded by `i18n-codegen`)
+- Basic build.rs generator (superseded by `i18n-gen`)
 - Not published to crates.io
