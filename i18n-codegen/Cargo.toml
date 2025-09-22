@@ -2,6 +2,13 @@
 name = "i18n-codegen"
 version = "0.1.0"
 edition = "2024"
+authors = ["Sumit Kumar <sharansumitkumar@gmail.com>"]
+license = "MIT"
+description = "CLI tool that generates fast, type-safe Rust i18n code (MessageKey enum + PHF maps) from JSON schema and locales."
+readme = "README.md"
+repository = "https://github.com/sumitsharansatsangi/i18n-codegen"
+keywords = ["i18n", "localization", "codegen", "phf"]
+categories = ["development-tools::build-utils", "internationalization"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -9,3 +16,7 @@ serde_json = "1.0"
 phf = { version = "0.13.1", features = ["macros"] }
 walkdir = "2.3"
 anyhow = "1.0"
+
+[[bin]]
+name = "i18n-codegen"
+path = "src/main.rs"
