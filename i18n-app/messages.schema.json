@@ -1,0 +1,8 @@
+{
+    "keys": [
+        "welcome",
+        "login_success",
+        "login_failed",
+        "error"
+    ]
+}

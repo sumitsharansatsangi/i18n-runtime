@@ -1,0 +1,13 @@
+[package]
+name = "i18n-runtime"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+phf = { version = "0.13", features = ["macros"] }
+serde = { version = "1.0", optional = true }
+serde_json = { version = "1.0", optional = true }
+
+[features]
+default = ["runtime-json"]
+runtime-json = ["serde", "serde_json"]

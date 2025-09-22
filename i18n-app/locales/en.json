@@ -1,0 +1,6 @@
+{
+    "welcome": "Welcome!",
+    "login_success": "You have logged in successfully.",
+    "login_failed": "Login failed. Please try again.",
+    "error": "Error occurred."
+}

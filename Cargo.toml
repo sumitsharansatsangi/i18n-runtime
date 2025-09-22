@@ -1,0 +1,7 @@
+[workspace]
+resolver = "3"
+members = [
+  "i18n-runtime",
+  "i18n-codegen",
+  "i18n-app",
+]

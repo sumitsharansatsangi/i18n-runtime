@@ -1,0 +1,8 @@
+[package]
+name = "i18n-app"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+i18n-runtime = { path = "../i18n-runtime" }
+phf = { version = "0.13.1", features = ["macros"] }
