@@ -16,7 +16,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let tags = ["en-IN", "hi-IN", "en-US", "fr"];
     for tag in &tags {
         let loc = Locale::new(*tag);
-        let s = i18n.get_owned(&loc, "welcome").unwrap_or_else(|| "<missing>".into());
+        let s = i18n
+            .get_owned(&loc, "welcome")
+            .unwrap_or_else(|| "<missing>".into());
         println!("{:<6} => {}", tag, s);
     }
 
@@ -27,7 +29,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // MessageKey is in the top-level include
     let l = Locale::new("en-IN");
-    let v = ig.get_by_str_key(&l, MessageKey::LoginSuccess.as_str()).unwrap_or("<missing>");
+    let v = ig
+        .get_by_str_key(&l, MessageKey::LoginSuccess.as_str())
+        .unwrap_or("<missing>");
     println!("en-IN LoginSuccess => {}", v);
 
     Ok(())
