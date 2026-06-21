@@ -11,7 +11,7 @@ keywords = ["i18n", "localization", "phf"]
 categories = ["internationalization", "development-tools"]
 
 [dependencies]
-phf = { version = "0.13", features = ["macros"] }
+phf = { version = "0.14.0", features = ["macros"] }
 serde = { version = "1.0", optional = true }
 serde_json = { version = "1.0", optional = true }
 
