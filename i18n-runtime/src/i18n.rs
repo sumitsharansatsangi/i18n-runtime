@@ -28,7 +28,8 @@ pub struct I18n {
 
     // optional generated registry (compiled phf maps) provided by consumer (static lifetime)
     // stored as slice of (tag, &phf::Map<_,_>)
-    pub generated_registry: Option<&'static [(&'static str, &'static phf::Map<&'static str, &'static str>)]>,
+    pub generated_registry:
+        Option<&'static [(&'static str, &'static phf::Map<&'static str, &'static str>)]>,
 
     // fallback tag (e.g. "en")
     pub fallback: String,
@@ -48,7 +49,10 @@ impl I18n {
     /// Expects files like `en.json`, `en-IN.json`, etc.
     /// This uses `serde_json` at runtime (feature "runtime-json").
     #[cfg(feature = "runtime-json")]
-    pub fn from_json_dir<P: AsRef<std::path::Path>>(dir: P, fallback: &str) -> Result<Self, String> {
+    pub fn from_json_dir<P: AsRef<std::path::Path>>(
+        dir: P,
+        fallback: &str,
+    ) -> Result<Self, String> {
         let mut s = Self::new(fallback.to_string());
         let dir = dir.as_ref();
         if !dir.exists() {
@@ -60,9 +64,13 @@ impl I18n {
             if p.extension().and_then(|e| e.to_str()) != Some("json") {
                 continue;
             }
-            let tag = p.file_stem().and_then(|s| s.to_str()).ok_or_else(|| "bad filename".to_string())?;
+            let tag = p
+                .file_stem()
+                .and_then(|s| s.to_str())
+                .ok_or_else(|| "bad filename".to_string())?;
             let content = std::fs::read_to_string(&p).map_err(|e| e.to_string())?;
-            let obj: serde_json::Map<String, serde_json::Value> = serde_json::from_str(&content).map_err(|e| e.to_string())?;
+            let obj: serde_json::Map<String, serde_json::Value> =
+                serde_json::from_str(&content).map_err(|e| e.to_string())?;
             let mut map = HashMap::new();
             for (k, v) in obj.into_iter() {
                 if let Some(sv) = v.as_str() {
@@ -108,7 +116,10 @@ impl I18n {
 
     /// Resolve the best phf::Map from the generated registry (if present) using fallback chain:
     /// en-IN-BR -> en-IN -> en
-    fn resolve_generated_map(&self, tag: &str) -> Option<&'static phf::Map<&'static str, &'static str>> {
+    fn resolve_generated_map(
+        &self,
+        tag: &str,
+    ) -> Option<&'static phf::Map<&'static str, &'static str>> {
         let reg = self.generated_registry?;
         let mut tag = Self::normalize_tag(tag);
         if tag.is_empty() {

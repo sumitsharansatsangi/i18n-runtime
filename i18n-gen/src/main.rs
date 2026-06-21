@@ -17,7 +17,11 @@ fn normalize_tag_for_build(tag: &str) -> anyhow::Result<String> {
         return Ok(String::new());
     }
     if parts.len() > 3 {
-        anyhow::bail!("Locale '{}' has more than 3 subtags ({}).", tag, parts.len());
+        anyhow::bail!(
+            "Locale '{}' has more than 3 subtags ({}).",
+            tag,
+            parts.len()
+        );
     }
     let mut out = Vec::new();
     for (i, p) in parts.iter().enumerate() {
@@ -55,8 +59,14 @@ fn main() -> anyhow::Result<()> {
     // usage: i18n-gen <source_root> <dest_dir>
     // defaults: src = current dir, dest = ./src/generated_i18n
     let args: Vec<String> = std::env::args().collect();
-    let src = args.get(1).map(|s| PathBuf::from(s)).unwrap_or(std::env::current_dir()?);
-    let dest = args.get(2).map(|s| PathBuf::from(s)).unwrap_or_else(|| src.join("src/generated_i18n"));
+    let src = args
+        .get(1)
+        .map(|s| PathBuf::from(s))
+        .unwrap_or(std::env::current_dir()?);
+    let dest = args
+        .get(2)
+        .map(|s| PathBuf::from(s))
+        .unwrap_or_else(|| src.join("src/generated_i18n"));
 
     println!("source root: {}", src.display());
     println!("dest dir: {}", dest.display());
@@ -64,13 +74,21 @@ fn main() -> anyhow::Result<()> {
     let schema_path = src.join("messages.schema.json");
     let locales_dir = src.join("locales");
 
-    anyhow::ensure!(schema_path.exists(), "messages.schema.json not found at {}", schema_path.display());
-    anyhow::ensure!(locales_dir.exists(), "locales/ dir not found at {}", locales_dir.display());
+    anyhow::ensure!(
+        schema_path.exists(),
+        "messages.schema.json not found at {}",
+        schema_path.display()
+    );
+    anyhow::ensure!(
+        locales_dir.exists(),
+        "locales/ dir not found at {}",
+        locales_dir.display()
+    );
 
     let schema_str = fs::read_to_string(&schema_path)
         .with_context(|| format!("reading schema {}", schema_path.display()))?;
-    let schema: Schema = serde_json::from_str(&schema_str)
-        .context("parsing messages.schema.json")?;
+    let schema: Schema =
+        serde_json::from_str(&schema_str).context("parsing messages.schema.json")?;
 
     let key_set: std::collections::HashSet<String> = schema.keys.iter().cloned().collect();
 
@@ -92,22 +110,35 @@ fn main() -> anyhow::Result<()> {
         out.push_str("impl MessageKey {\n");
         out.push_str("    pub fn as_u32(self) -> u32 {\n        match self {\n");
         for (i, key) in schema.keys.iter().enumerate() {
-            out.push_str(&format!("            MessageKey::{} => {},\n", snake_to_camel(key), i));
+            out.push_str(&format!(
+                "            MessageKey::{} => {},\n",
+                snake_to_camel(key),
+                i
+            ));
         }
         out.push_str("        }\n    }\n\n");
 
         out.push_str("    pub fn as_str(self) -> &'static str {\n        match self {\n");
         for key in schema.keys.iter() {
-            out.push_str(&format!("            MessageKey::{} => \"{}\",\n", snake_to_camel(key), key));
+            out.push_str(&format!(
+                "            MessageKey::{} => \"{}\",\n",
+                snake_to_camel(key),
+                key
+            ));
         }
         out.push_str("        }\n    }\n\n");
 
         out.push_str("    pub fn from_u32(v: u32) -> Option<MessageKey> {\n        match v {\n");
         for (i, key) in schema.keys.iter().enumerate() {
-            out.push_str(&format!("            {} => Some(MessageKey::{}),\n", i, snake_to_camel(key)));
+            out.push_str(&format!(
+                "            {} => Some(MessageKey::{}),\n",
+                i,
+                snake_to_camel(key)
+            ));
         }
         out.push_str("            _ => None,\n        }\n    }\n}\n");
-        fs::write(&gen_keys_path, out).with_context(|| format!("writing {}", gen_keys_path.display()))?;
+        fs::write(&gen_keys_path, out)
+            .with_context(|| format!("writing {}", gen_keys_path.display()))?;
         println!("wrote {}", gen_keys_path.display());
     }
 
@@ -137,11 +168,20 @@ fn main() -> anyhow::Result<()> {
         let obj = json.as_object().context("locale file not an object")?;
 
         // missing/extra
-        let missing: Vec<_> = schema.keys.iter().filter(|k| !obj.contains_key(*k)).cloned().collect();
+        let missing: Vec<_> = schema
+            .keys
+            .iter()
+            .filter(|k| !obj.contains_key(*k))
+            .cloned()
+            .collect();
         if !missing.is_empty() {
             anyhow::bail!("{} missing keys {:?}", path.display(), missing);
         }
-        let extra: Vec<_> = obj.keys().filter(|k| !key_set.contains(k.as_str())).cloned().collect();
+        let extra: Vec<_> = obj
+            .keys()
+            .filter(|k| !key_set.contains(k.as_str()))
+            .cloned()
+            .collect();
         if !extra.is_empty() {
             anyhow::bail!("{} extra keys {:?}", path.display(), extra);
         }
@@ -150,7 +190,11 @@ fn main() -> anyhow::Result<()> {
         let mut map_src = String::new();
         for key in schema.keys.iter() {
             let v = obj.get(key).unwrap().as_str().context("value not string")?;
-            map_src.push_str(&format!("    \"{}\" => \"{}\",\n", key, escape_rust_string(v)));
+            map_src.push_str(&format!(
+                "    \"{}\" => \"{}\",\n",
+                key,
+                escape_rust_string(v)
+            ));
         }
 
         let ident = ident_from_tag(&canonical);
@@ -158,10 +202,14 @@ fn main() -> anyhow::Result<()> {
         let mut out = String::new();
         out.push_str("// GENERATED — DO NOT EDIT\n");
         // Avoid emitting local `use` imports that clash when included together.
-        out.push_str(&format!("pub static {ident}: phf::Map<&'static str, &'static str> = phf::phf_map! {{\n", ident = ident));
+        out.push_str(&format!(
+            "pub static {ident}: phf::Map<&'static str, &'static str> = phf::phf_map! {{\n",
+            ident = ident
+        ));
         out.push_str(&map_src);
         out.push_str("};\n");
-        fs::write(&locale_file, out).with_context(|| format!("writing {}", locale_file.display()))?;
+        fs::write(&locale_file, out)
+            .with_context(|| format!("writing {}", locale_file.display()))?;
         println!("wrote {}", locale_file.display());
 
         tags.push(canonical);
@@ -175,14 +223,21 @@ fn main() -> anyhow::Result<()> {
         // include locale files (they declare statics with fully-qualified phf::Map)
         for tag in tags.iter() {
             let ident = ident_from_tag(tag);
-            out.push_str(&format!("include!(\"locales/{ident}.rs\");\n", ident = ident));
+            out.push_str(&format!(
+                "include!(\"locales/{ident}.rs\");\n",
+                ident = ident
+            ));
         }
         out.push_str("\n");
         // generate a static slice so the registry has 'static lifetime
         out.push_str("pub static GENERATED_REGISTRY: &'static [(&'static str, &'static phf::Map<&'static str, &'static str>)] = &[\n");
         for tag in tags.iter() {
             let ident = ident_from_tag(tag);
-            out.push_str(&format!("    (\"{tag}\", &{ident}),\n", tag = tag, ident = ident));
+            out.push_str(&format!(
+                "    (\"{tag}\", &{ident}),\n",
+                tag = tag,
+                ident = ident
+            ));
         }
         out.push_str("];\n\n");
         out.push_str("pub fn get_generated_registry() -> &'static [(&'static str, &'static phf::Map<&'static str, &'static str>)] {\n");
